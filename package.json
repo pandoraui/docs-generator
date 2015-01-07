@@ -1,0 +1,26 @@
+{
+  "name": "amazeui-docs-generator",
+  "version": "1.0.0",
+  "description": "Amaze UI docs generator.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amazeui/docs-generator.git"
+  },
+  "keywords": [
+    "Amaze",
+    "UI"
+  ],
+  "author": "minwe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amazeui/docs-generator/issues"
+  },
+  "homepage": "https://github.com/amazeui/docs-generator",
+  "devDependencies": {
+    "gulp": "^3.8.10"
+  }
+}
