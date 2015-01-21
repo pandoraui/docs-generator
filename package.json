@@ -11,16 +11,36 @@
     "url": "https://github.com/amazeui/docs-generator.git"
   },
   "keywords": [
-    "Amaze",
-    "UI"
+    "amaze-ui",
+    "amaze-ui-docs",
+    "markdown",
+    "dash",
+    "docset"
   ],
-  "author": "minwe",
+  "author": {
+    "name": "minwe",
+    "email": "hegfirose@gmail.com",
+    "url": "http://csspod.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/amazeui/docs-generator/issues"
   },
   "homepage": "https://github.com/amazeui/docs-generator",
   "devDependencies": {
-    "gulp": "^3.8.10"
+    "amazeui": "^2.1.1",
+    "amazeui-doc-util": "^0.1.3",
+    "del": "^1.1.1",
+    "gulp": "^3.8.10",
+    "gulp-less": "^2.0.1",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-minify-html": "^0.1.8",
+    "gulp-rename": "^1.2.0",
+    "jquery": "^2.1.3",
+    "markit-json": "^0.2.1",
+    "run-sequence": "^1.0.2",
+    "sequelize": "^2.0.0-rc8",
+    "sqlite3": "^3.0.4",
+    "through2": "^0.6.3"
   }
 }
