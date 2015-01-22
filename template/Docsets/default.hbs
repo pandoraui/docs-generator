@@ -1,0 +1,50 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>{{title}} | Amaze UI Dash Docsets</title>
+  <link rel="icon" type="image/png" href="i/icon.png">
+
+  <!-- build:css css/app.css -->
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="../../bower_components/amazeui/dist/css/amazeui.css">
+  <!-- endbuild -->
+
+  <!-- build:js js/app.js -->
+  <script src="../../node_modules/jquery/dist/jquery.js"></script>
+  <script src="../../bower_components/amazeui/dist/js/amazeui.js"></script>
+  <!-- endbuild -->
+    {{{head}}}
+</head>
+<body class="am-doc">
+<section class="amp-main">
+    {{{body}}}
+
+  <nav class="amp-pager">
+      {{#if prev}}
+        <ul class="am-pagination">
+          <li class="am-pagination-prev"><a href="{{prev}}">&laquo; Prev</a>
+          </li>
+            {{#if next}}
+              <li class="am-pagination-next"><a href="{{next}}">Next &raquo;</a>
+              </li>
+            {{/if}}
+        </ul>
+      {{else}}
+          {{#if next}}
+            <ul class="am-pagination">
+              <li class="am-pagination-next"><a href="{{next}}">Next &raquo;</a>
+              </li>
+            </ul>
+          {{/if}}
+      {{/if}}
+  </nav>
+</section>
+{{{footer}}}
+</body>
+</html>
