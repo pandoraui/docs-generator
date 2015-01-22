@@ -12,9 +12,10 @@ Amaze UI 文档生成工具。目前支持：
 
 - 首先你得 Mac 或者 iOS 设备；
 - 安装 [Dash](http://kapeli.com/dash)；
-- [下载本项目](https://github.com/amazeui/docs-generator/archive/master.zip)，双击 `dist` 目录中的 `amazeui.docset` 安装到 Dash（iOS 设备参考官方文档）。
+- [下载压缩包](AmazeUI.Docsets-2.1.0.zip)并解压，双击 `dist` 目录中的 `AmazeUI.docset` 安装到 Dash（iOS 设备参考官方文档）。
 
-没有 Dash 的用户也可以直接以 HTML 的形式浏览，HTML 文件的路径为：
+没有 Dash 的用户也可以 Clone 项目执行 Gulp 直接以 HTML 的形式浏览，HTML 文件的路径为：
+
 ```
 dist/amazeui.docset/Contents/Resources/Documents
 ```

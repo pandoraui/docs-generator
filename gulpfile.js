@@ -10,15 +10,16 @@ var through = require('through2');
 var Sequelize = require('sequelize');
 var runSequence = require('run-sequence');
 var del = require('del');
+var pkg = require('./amazeui/package.json');
 
 var paths = {
   mdDocs: './amazeui/docs/**/*.md',
   dist: {
-    html: 'dist/amazeui.docset/Contents/Resources/Documents',
-    assets: 'dist/amazeui.docset/Contents/Resources/Documents/assets/'
+    html: 'dist/AmazeUI.docset/Contents/Resources/Documents',
+    assets: 'dist/AmazeUI.docset/Contents/Resources/Documents/assets/'
   },
-  docsets: 'dist/amazeui.docset/Contents/',
-  sqlite: 'dist/amazeui.docset/Contents/Resources/docSet.dsidx'
+  docsets: 'dist/AmazeUI.docset/Contents/',
+  sqlite: 'dist/AmazeUI.docset/Contents/Resources/docSet.dsidx'
 };
 
 var tpl = fs.readFileSync('template/docsets/default.hbs', {
@@ -135,7 +136,7 @@ gulp.task('misc:info', function() {
 
 gulp.task('misc:icon', function() {
   return gulp.src('template/docsets/i/icon.png')
-    .pipe(gulp.dest('dist/amazeui.docset/'));
+    .pipe(gulp.dest('dist/AmazeUI.docset/'));
 });
 
 gulp.task('misc:amui', function() {
@@ -164,7 +165,18 @@ gulp.task('clean', function(cb) {
   del('dist', cb);
 });
 
+gulp.task('zip', function(cb) {
+  return gulp.src(['dist/**/*', '!dist/*.zip'])
+    .pipe($.zip('AmazeUI.Docsets-' + pkg.version + '.zip'))
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('ghPages', function() {
+  return gulp.src('dist/*.zip')
+    .pipe($.ghPages())
+});
+
 // default task
 gulp.task('default', function(cb) {
-  runSequence('clean', 'less', ['misc', 'markdown'], cb);
+  runSequence('clean', 'less', ['misc', 'markdown'], 'zip', 'ghPages', cb);
 });
