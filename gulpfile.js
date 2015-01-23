@@ -53,7 +53,7 @@ var SearchIndex = sequelize.define('searchIndex', {
 });
 
 var createIndex = function(data) {
-  sequelize.sync({force: true}).then(function() {
+  sequelize.sync().then(function() {
     SearchIndex.create({
       name: data.name,
       type: data.type,
@@ -76,10 +76,10 @@ var setAsserts = function() {
       assets = '../' + assets;
     }
 
-    if (relative.indexOf('javascript') > -1) {
-      type = 'Plugin';
-    } else if (relative.indexOf('styleguide') > -1) {
+    if (relative.indexOf('styleguide') > -1) {
       type = 'Section';
+    } else if (relative.indexOf('javascript') > -1) {
+      type = 'Plugin';
     } else if (relative.indexOf('css') > -1) {
       type = 'Style';
     }
@@ -115,7 +115,9 @@ gulp.task('markdown', function() {
     '!amazeui/docs/javascript/share.md',
     '!amazeui/docs/javascript/pureview.md',
     '!amazeui/docs/css/mixins.md',
-    '!amazeui/docs/css/variables.md'
+    '!amazeui/docs/css/variables.md',
+    '!amazeui/docs/getting-started/layouts.md',
+    '!amazeui/docs/getting-started/team.md'
   ])
     .pipe(markJSON(docUtil.markedOptions))
     .pipe(setAsserts())
@@ -171,12 +173,16 @@ gulp.task('zip', function(cb) {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('ghPages', function() {
+gulp.task('deploy', function() {
   return gulp.src('dist/*.zip')
     .pipe($.ghPages())
 });
 
+gulp.task('watch', function() {
+  gulp.watch('amazeui/docs/**/*', ['markdown']);
+});
+
 // default task
 gulp.task('default', function(cb) {
-  runSequence('clean', 'less', ['misc', 'markdown'], 'zip', 'ghPages', cb);
+  runSequence('clean', 'less', ['misc', 'markdown'], 'watch', cb);
 });
