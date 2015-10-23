@@ -12,15 +12,45 @@ var runSequence = require('run-sequence');
 var del = require('del');
 var pkg = require('./amazeui/package.json');
 
-var paths = {
-  mdDocs: './amazeui/docs/**/*.md',
-  dist: {
-    html: 'dist/AmazeUI.docset/Contents/Resources/Documents',
-    assets: 'dist/AmazeUI.docset/Contents/Resources/Documents/assets/'
+var docsPath = {
+  docset: {
+    root: 'dist/AmazeUI.docset/Contents/',
+    sqlite: 'Resources/docSet.dsidx',
+    html: 'Resources/Documents/',
+    assets: 'assets/',
+    css: 'css',
+    js: 'js'
   },
-  docsets: 'dist/AmazeUI.docset/Contents/',
-  sqlite: 'dist/AmazeUI.docset/Contents/Resources/docSet.dsidx'
+  docs: {
+    root: 'dist/',
+    sqlite: 'docSet.dsidx',
+    assets: 'assets/',
+    html: '',
+    icon: 'i',
+    css: 'css',
+    js: 'js'
+  }
 };
+
+var paths, docsType = 'docset';
+
+function generatorPath(type){
+  docsType = type || 'docset';
+  paths = {
+    mdDocs: './amazeui/docs/**/*.md',
+    dist: {
+      //html: 'dist/AmazeUI.docset/Contents/Resources/Documents',
+      html: docsPath[docsType].root + docsPath[docsType].html,
+
+      //assets: 'dist/AmazeUI.docset/Contents/Resources/Documents/assets/',
+      assets: docsPath[docsType].root + docsPath[docsType].html + docsPath[docsType].assets
+    },
+    docsets: docsPath[docsType].root,
+    sqlite: docsPath[docsType].root + docsPath[docsType].sqlite
+  };
+}
+generatorPath('docset');
+
 
 var tpl = fs.readFileSync('template/docsets/default.hbs', {
   encoding: 'utf8'
@@ -108,6 +138,7 @@ gulp.task('less', function() {
 gulp.task('markdown', function() {
   return gulp.src([
     paths.mdDocs,
+    '!amazeui/docs/en/**/*',
     '!amazeui/docs/about/**/*',
     '!amazeui/docs/about.md',
     '!amazeui/docs/amaze.md',
@@ -116,11 +147,12 @@ gulp.task('markdown', function() {
     '!amazeui/docs/javascript/pureview.md',
     '!amazeui/docs/css/mixins.md',
     '!amazeui/docs/css/variables.md',
-    '!amazeui/docs/getting-started/layouts.md',
+    // '!amazeui/docs/getting-started/layouts.md',
     '!amazeui/docs/getting-started/team.md'
   ])
     .pipe(markJSON(docUtil.markedOptions))
-    .pipe(setAsserts())
+    //.pipe($.if(docsType === 'docset', setAsserts() ) )
+    .pipe(setAsserts())//这里生成 docs 时，报 unable to open database file
     .pipe(docUtil.applyTemplate(tpl))
     .pipe($.rename(function(file) {
       file.extname = '.html';
@@ -128,7 +160,7 @@ gulp.task('markdown', function() {
         file.basename = 'index';
       }
     }))
-    .pipe(gulp.dest(paths.docsets + 'Resources/Documents'));
+    .pipe(gulp.dest(paths.dist.html));
 });
 
 gulp.task('misc:info', function() {
@@ -138,7 +170,7 @@ gulp.task('misc:info', function() {
 
 gulp.task('misc:icon', function() {
   return gulp.src('template/docsets/i/icon.png')
-    .pipe(gulp.dest('dist/AmazeUI.docset/'));
+    .pipe(gulp.dest(paths.dist.assets + 'i'));
 });
 
 gulp.task('misc:amui', function() {
@@ -155,7 +187,7 @@ gulp.task('misc:amui', function() {
 
 gulp.task('misc:jq', function() {
   return gulp.src('*.min.js', {
-    cwd: 'node_modules/jquery/dist/cdn'
+    cwd: 'node_modules/jquery/dist/'
   })
     .pipe($.rename('jquery.min.js'))
     .pipe(gulp.dest(paths.dist.assets + 'js'));
@@ -182,7 +214,22 @@ gulp.task('watch', function() {
   gulp.watch('amazeui/docs/**/*', ['markdown']);
 });
 
-// default task
+// default task  Docset
 gulp.task('default', function(cb) {
+  generatorPath('docset');
+  runSequence('clean', 'less', ['misc', 'markdown'], 'watch', cb);
+});
+
+
+
+
+
+
+
+
+//生成 html 文档
+
+gulp.task('docs', function(cb) {
+  generatorPath('docs');
   runSequence('clean', 'less', ['misc', 'markdown'], 'watch', cb);
 });
