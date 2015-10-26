@@ -19,23 +19,18 @@
     {{{body}}}
 
   <nav class="amp-pager">
-      {{#if prev}}
+      <!-- #if (prev || next) -->
         <ul class="am-pagination">
+          {{#if prev}}
           <li class="am-pagination-prev"><a href="{{prev}}">&laquo; Prev</a>
           </li>
-            {{#if next}}
-              <li class="am-pagination-next"><a href="{{next}}">Next &raquo;</a>
-              </li>
-            {{/if}}
-        </ul>
-      {{else}}
-          {{#if next}}
-            <ul class="am-pagination">
-              <li class="am-pagination-next"><a href="{{next}}">Next &raquo;</a>
-              </li>
-            </ul>
           {{/if}}
-      {{/if}}
+          {{#if next}}
+            <li class="am-pagination-next"><a href="{{next}}">Next &raquo;</a>
+            </li>
+          {{/if}}
+        </ul>
+      <!-- /if -->
   </nav>
 </section>
 {{{footer}}}

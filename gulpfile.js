@@ -3,6 +3,8 @@
 var path = require('path');
 var fs = require('fs');
 var gulp = require('gulp');
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
 var $ = require('gulp-load-plugins')();
 var markJSON = require('markit-json');
 var docUtil = require('amazeui-doc-util');
@@ -10,7 +12,7 @@ var through = require('through2');
 var Sequelize = require('sequelize');
 var runSequence = require('run-sequence');
 var del = require('del');
-var pkg = require('./amazeui/package.json');
+var pkg = require('../amazeui/package.json');
 
 var docsPath = {
   docset: {
@@ -169,7 +171,12 @@ gulp.task('misc:info', function() {
 });
 
 gulp.task('misc:icon', function() {
-  return gulp.src('template/docsets/i/icon.png')
+  return gulp.src([
+      // 'template/docsets/i/icon.png'
+      '**/*'
+    ], {
+      cwd: './amazeui/dist/i/'
+    })
     .pipe(gulp.dest(paths.dist.assets + 'i'));
 });
 
@@ -180,7 +187,8 @@ gulp.task('misc:amui', function() {
     '*/*.otf',
     '*/fontawesome*'
   ], {
-    cwd: 'node_modules/amazeui/dist'
+    // cwd: 'node_modules/amazeui/dist'
+    cwd: './amazeui/dist'
   })
     .pipe(gulp.dest(paths.dist.assets));
 });
@@ -221,9 +229,35 @@ gulp.task('default', function(cb) {
 });
 
 
+var distRoot = 'dist'
+var config = {
+  //预览服务器
+  browserSync: {
+    // port: 5000, //默认3000
+    // ui: {    //更改默认端口weinre 3001
+    //     port: 5001,
+    //     weinre: {
+    //         port: 9090
+    //     }
+    // },
+    // server: {
+    //   baseDir: 'dist/docs'
+    // },
+    open: "local", //external
+    notify: true,
+    logPrefix: 'happyCoding',
+    server: distRoot
+  },
+  // watch files and reload browserSync
+  bsWatches: distRoot + '/**/*',
+};
+gulp.task('server', function() {
+  var bs = browserSync(config.browserSync);
 
-
-
+  if (config.bsWatches) {
+    gulp.watch(config.bsWatches, bs.reload);
+  }
+});
 
 
 
@@ -231,5 +265,5 @@ gulp.task('default', function(cb) {
 
 gulp.task('docs', function(cb) {
   generatorPath('docs');
-  runSequence('clean', 'less', ['misc', 'markdown'], 'watch', cb);
+  runSequence('clean', 'less', ['misc', 'markdown'], 'watch', 'server', cb);
 });
