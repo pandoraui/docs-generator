@@ -1,0 +1,147 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>{{title}} | Amaze UI Dash Docsets</title>
+  <link rel="stylesheet" href="{{assets}}css/amazeui.min.css">
+  <link rel="stylesheet" href="{{assets}}css/app.css">
+  <script src="{{assets}}js/jquery.min.js"></script>
+  <script src="{{assets}}js/amazeui.min.js"></script>
+  {{{head}}}
+</head>
+<body class="am-doc">
+<!--[if lte IE 9 ]>
+<div class="am-alert am-alert-danger ie-warning" data-am-alert>
+  <button type="button" class="am-close">&times;</button>
+  <div class="am-container">
+    安全提醒：你的浏览器太古董了，有太多漏洞有可能导致安全问题，<a
+    href="http://browsehappy.com/" target="_blank">速速点击换一个</a>！</div>
+</div>
+<![endif]-->
+
+<header id="amz-header">
+  <div class="amz-container am-cf">
+    <h1>
+      <a href="/">Amaze UI</a>
+      <span class="am-badge am-badge-danger">2.4</span>
+    </h1>
+    <button class="am-btn am-btn-primary am-show-sm-only" data-am-collapse="{target: '.amz-header-nav'}">
+      <span class="am-sr-only">导航切换</span>
+      <span class="am-icon-bars"></span>
+    </button>
+    <nav>
+      <ul class="amz-header-nav am-collapse">
+        <li class="am-active"><a href="/getting-started">开始使用</a></li>
+        <li><a href="/css">CSS</a></li>
+        <li><a href="/javascript">JS 插件</a></li>
+        <li><a href="/widgets">Web 组件</a></li>
+        <li class="nav-react"><a href="http://amazeui.org/react/" target="_blank">React</a></li>
+        <li class="amz-cse">
+          <form action="http://zhannei.baidu.com/cse/search" method="get" target="_blank" class="cse-form">
+            <input type="hidden" name="s" value="13988471460650623274">
+            <input type="hidden" name="entry" value="1">
+            <input type="text" required name="q" placeholder="搜索" autocomplete="off">
+            <button><span class="am-icon-search"></span></button>
+          </form>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="amz-banner">
+  <div class="amz-container" data-am-scrollspy="{animation: 'scale-up', repeat: false}">
+    <h1>开始使用</h1>
+    <p>Amaze UI 概览，下载、使用，模板示例，二次开发……</p>
+  </div>
+</div>
+
+<section class="" id="amz-main" data-tag="css">
+  <div class="am-g am-g-fixed">
+    <div class="col-md-3 am-u-md-3">
+      <div id="amz-offcanvas" class="am-offcanvas doc-offcanvas">
+        <section class="amz-sidebar am-offcanvas-bar">
+          <ul class="am-nav">
+            <li class="am-nav-header">基本使用</li>
+            <li><a href="/getting-started/layouts">布局示例<span class="am-nav-en">Layouts</span></a></li>
+            <li><a href="/getting-started/compatibility">兼容性列表<span class="am-nav-en">Compatibility</span></a></li>
+            <li><a href="https://github.com/allmobilize/amazeui/blob/master/CHANGELOG.md" target="_blank">更新记录<span class="am-nav-en">Change Log</span></a></li>
+            <li><a href="/getting-started/webapp">Web App 相关<span class="am-nav-en">Web App</span></a></li>
+            <li><a href="/getting-started/collections">藏品<span class="am-nav-en">Collections</span></a></li>
+            <li class="am-nav-header">进阶开发</li>
+            <li><a href="/getting-started/project-structure">项目结构<span class="am-nav-en">Structure</span></a></li>
+            <li><a href="/getting-started/widget-dev">Web 组件简介<span class="am-nav-en">Web Component</span></a></li>
+            <li><a href="/getting-started/html-css">HTML/CSS 规范<span class="am-nav-en">Rules</span></a></li>
+            <li><a href="/getting-started/javascript">JavaScript 规范<span class="am-nav-en">Rules</span></a></li>
+            <li><a href="/getting-started/widget">Web 组件规范<span class="am-nav-en">Rules</span></a></li>
+            <li class="am-nav-header">你来我往</li>
+            <li><a href="/getting-started/faq">常见问题<span class="am-nav-en">FAQs</span></a></li>
+            <li><a href="/getting-started/feedback">Bug 反馈<span class="am-nav-en">Feedback</span></a></li>
+            <li><a href="https://github.com/allmobilize/amazeui/wiki/Credits" target="_blank">感谢有你<span class="am-nav-en">Credits</span></a></li>
+            <li><a href="/getting-started/team">开发者说<span class="am-nav-en">Team</span></a></li>
+          </ul>
+        </section>
+        <div class="amz-pager">
+          <a href="#up" class="am-icon-caret-up" data-rel="scrollUp"></a>
+          <a href="#down" class="am-icon-caret-down" data-rel="scrollDown"></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9 am-u-md-9 doc-content">
+      <div class="doc-toc">
+        <h2><span>目录</span></h2>
+        <div class="doc-toc-bd">
+          <ul class="md-toc">
+            <li><a href="#huo-qu-amaze-ui">获取 Amaze UI</a>
+              <ul class="am-collapse">
+                <li><a href="#xia-zai-wen-jian">下载文件</a></li>
+                <li><a href="#shi-yong-cdn">使用 CDN</a></li>
+                <li><a href="#shi-yong-bower">使用 Bower</a></li>
+                <li><a href="#yi-zhi-de-cha-jian-shi-yong-shi-li-">移植的插件（使用示例）</a></li>
+                <li><a href="#huo-qu-yuan-ma">获取源码</a></li>
+              </ul>
+            </li>
+            <li><a href="#wen-jian-ji-ban-ben-shuo-ming">文件及版本说明</a>
+              <ul class="am-collapse">
+                <li><a href="#wen-jian-shuo-ming">文件说明</a></li>
+                <li><a href="#ban-ben-hao-shuo-ming">版本号说明</a></li>
+              </ul>
+            </li>
+            <li><a href="#xia-zai-bao-mu-lu-jie-gou">下载包目录结构</a></li>
+            <li><a href="#chuang-jian-yi-ge-ye-mian">创建一个页面</a></li>
+            <li><a href="#can-yu-tao-lun">参与讨论</a></li>
+          </ul>
+        </div>
+      </div>
+<!-- <section class="doc-main am-padding-lg"> -->
+
+      {{{body}}}
+
+      <nav class="amp-pager">
+        <!-- #if (prev || next) -->
+        <ul class="am-pagination">
+          {{#if prev}}
+          <li class="am-pagination-prev"><a href="{{prev}}">&laquo; Prev</a>
+          </li>
+          {{/if}}
+          {{#if next}}
+            <li class="am-pagination-next"><a href="{{next}}">Next &raquo;</a>
+            </li>
+          {{/if}}
+        </ul>
+        <!-- /if -->
+      </nav>
+    </div>
+  </div>
+</section>
+{{{footer}}}
+<script>
+
+</script>
+</body>
+</html>

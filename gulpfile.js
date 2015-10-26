@@ -16,6 +16,7 @@ var pkg = require('../amazeui/package.json');
 
 var docsPath = {
   docset: {
+    tpl: '',
     root: 'dist/AmazeUI.docset/Contents/',
     sqlite: 'Resources/docSet.dsidx',
     html: 'Resources/Documents/',
@@ -24,6 +25,7 @@ var docsPath = {
     js: 'js'
   },
   docs: {
+    tpl: '',
     root: 'dist/',
     sqlite: 'docSet.dsidx',
     assets: 'assets/',
@@ -36,10 +38,17 @@ var docsPath = {
 
 var paths, docsType = 'docset';
 
-function generatorPath(type){
+function generatorPath(type, debug){
+  debug = debug || false,
   docsType = type || 'docset';
+
+  var tplPath = 'template/docsets/default.hbs';
+  if(type == 'docs'){
+    tplPath = 'template/docs.hbs';
+  }
   paths = {
-    mdDocs: './amazeui/docs/**/*.md',
+    tpl: fs.readFileSync(tplPath, { encoding: 'utf8' }),
+    mdDocs: debug ? './amazeui/docs/**/*.md' : './amazeui/docs/*.md',
     dist: {
       //html: 'dist/AmazeUI.docset/Contents/Resources/Documents',
       html: docsPath[docsType].root + docsPath[docsType].html,
@@ -54,9 +63,6 @@ function generatorPath(type){
 generatorPath('docset');
 
 
-var tpl = fs.readFileSync('template/docsets/default.hbs', {
-  encoding: 'utf8'
-});
 
 var sequelize = new Sequelize(null, null, null, {
   dialect: 'sqlite',
@@ -155,7 +161,7 @@ gulp.task('markdown', function() {
     .pipe(markJSON(docUtil.markedOptions))
     //.pipe($.if(docsType === 'docset', setAsserts() ) )
     .pipe(setAsserts())//这里生成 docs 时，报 unable to open database file
-    .pipe(docUtil.applyTemplate(tpl))
+    .pipe(docUtil.applyTemplate(paths.tpl))
     .pipe($.rename(function(file) {
       file.extname = '.html';
       if (file.basename === 'getting-started') {
@@ -229,7 +235,7 @@ gulp.task('default', function(cb) {
 });
 
 
-var distRoot = 'dist'
+var distRoot = './dist'
 var config = {
   //预览服务器
   browserSync: {
@@ -249,7 +255,11 @@ var config = {
     server: distRoot
   },
   // watch files and reload browserSync
-  bsWatches: distRoot + '/**/*',
+  bsWatches: [
+    distRoot + '/**/*',
+    './template/**/*',
+    './template/*'
+  ],
 };
 gulp.task('server', function() {
   var bs = browserSync(config.browserSync);
@@ -266,4 +276,10 @@ gulp.task('server', function() {
 gulp.task('docs', function(cb) {
   generatorPath('docs');
   runSequence('clean', 'less', ['misc', 'markdown'], 'watch', 'server', cb);
+});
+
+
+gulp.task('test', function(cb) {
+  generatorPath('docs', true);
+  runSequence('docs', cb);
 });
